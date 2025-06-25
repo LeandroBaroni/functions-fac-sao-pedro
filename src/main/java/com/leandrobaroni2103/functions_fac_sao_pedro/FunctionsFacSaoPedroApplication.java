@@ -9,5 +9,4 @@ public class FunctionsFacSaoPedroApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FunctionsFacSaoPedroApplication.class, args);
 	}
-
 }
