@@ -1,22 +1,12 @@
-# Importing JDK and copying required files
-FROM openjdk:19-jdk AS build
+# Etapa 1: build do jar com Maven
+FROM maven:3.9.6-amazoncorretto-17 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src src
+COPY . .
+RUN ./mvnw clean install -DskipTests
 
-# Copy Maven wrapper
-COPY mvnw .
-COPY .mvn .mvn
-
-# Set execution permission for the Maven wrapper
-RUN chmod +x ./mvnw
-RUN ./mvnw clean package -DskipTests
-
-# Stage 2: Create the final Docker image using OpenJDK 19
-FROM openjdk:19-jdk
-VOLUME /tmp
-
-# Copy the JAR from the build stage
-COPY --from=build /app/target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Etapa 2: imagem final leve com apenas o jar
+FROM amazoncorretto:17-alpine
+WORKDIR /app
+COPY --from=build /app/target/functions-fac-sao-pedro-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
