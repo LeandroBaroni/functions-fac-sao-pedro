@@ -1,0 +1,12 @@
+
+previews:
+  generation: automatic
+
+services:
+  - type: web
+    name: functions-fac-sao-pedro
+    repo: https://github.com/LeandroBaroni/functions-fac-sao-pedro
+    env: java
+    plan: free
+    buildCommand: ./mvnw clean install
+    startCommand: java -jar target/functions-fac-sao-pedro-0.0.1-SNAPSHOT.jar
