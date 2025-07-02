@@ -3,6 +3,7 @@ package com.leandrobaroni2103.functions_fac_sao_pedro.firebase;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.leandrobaroni2103.functions_fac_sao_pedro.exceptions.ResponseException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class FirebaseInitialization {
       }
     } catch (Exception e) {
       e.printStackTrace();
-      throw new RuntimeException(e.getMessage());
+      throw new ResponseException(e.getMessage());
     }
   }
 }
