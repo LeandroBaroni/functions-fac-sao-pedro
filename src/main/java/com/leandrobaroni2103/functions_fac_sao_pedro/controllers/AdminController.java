@@ -54,13 +54,26 @@ public class AdminController {
   }
 
   @GetMapping("")
-  public List<Admin> getAdmins() throws ExecutionException, InterruptedException {
-    return adminService.getAll();
+  public List<Admin> getAdmins() {
+    try {
+      return adminService.getAll();
+    } catch (ExecutionException e) {
+      throw new ResponseException(e.getMessage(), "@application/execution-exception");
+    } catch (InterruptedException e) {
+      throw new ResponseException(e.getMessage(), "@application/interrupted-exception");
+    }
   }
 
   @GetMapping("/{id}")
-  public Admin getUser(@PathVariable String id) throws ExecutionException, InterruptedException {
-    return this.adminService.getById(id);
+  public Admin getUser(@PathVariable String id) {
+    try {
+      System.out.println("ID da busca: " + id);
+      return this.adminService.getById(id);
+    } catch (ExecutionException e) {
+      throw new ResponseException(e.getMessage(), "@application/execution-exception");
+    } catch (InterruptedException e) {
+      throw new ResponseException(e.getMessage(), "@application/interrupted-exception");
+    }
   }
 
   @PostMapping("/update-password/{id}")
